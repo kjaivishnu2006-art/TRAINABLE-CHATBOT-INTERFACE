@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "type": "lightweight",
+    "chatbot_name": "Programming FAQ Bot",
+    "export_date": "2024-03-12T10:30:45.123456",
+    "total_qa_pairs": 10,
+    "size_estimation_kb": 15,
+    "suitable_for": "mobile_apps"
+  },
+  "qa_pairs": [
+    {
+      "id": 0,
+      "question": "What is Python?",
+      "answer": "Python is a high-level, interpreted programming language known for its simplicity and readability. It was created by Guido van Rossum and first released in 1991. Python emphasizes code readability and has a simpler syntax compared to many other languages.",
+      "keywords": [
+        "python",
+        "programming",
+        "language",
+        "interpreted",
+        "high-level"
+      ]
+    },
+    {
+      "id": 1,
+      "question": "How do I install Python?",
+      "answer": "You can install Python by visiting python.org, downloading the latest version for your operating system (Windows, macOS, or Linux), and running the installer. During installation, make sure to check the option 'Add Python to PATH' to use it from the command line.",
+      "keywords": [
+        "install",
+        "download",
+        "setup",
+        "python.org",
+        "windows",
+        "macos",
+        "linux"
+      ]
+    },
+    {
+      "id": 2,
+      "question": "What is Java?",
+      "answer": "Java is a general-purpose, object-oriented programming language designed to have as few implementation dependencies as possible. It follows the 'write once, run anywhere' (WORA) principle through the Java Virtual Machine (JVM), allowing code to run on any platform with a JVM installed.",
+      "keywords": [
+        "java",
+        "programming",
+        "object-oriented",
+        "wora",
+        "jvm",
+        "virtual",
+        "machine"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "What is the difference between Python and Java?",
+      "answer": "Key differences: Python is dynamically typed while Java is statically typed. Python is interpreted while Java is compiled to bytecode. Python has simpler syntax and is easier to learn, while Java is more verbose. Python is better for scripting and data science, while Java is better for large enterprise applications.",
+      "keywords": [
+        "difference",
+        "python",
+        "java",
+        "dynamically",
+        "typed",
+        "statically",
+        "interpreted",
+        "compiled"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "How do I learn programming?",
+      "answer": "Start with the basics: choose a language (Python is great for beginners), learn fundamental concepts (variables, loops, functions), practice with small projects, read others' code, and participate in coding communities. Use online resources like Codecademy, freeCodeCamp, or official documentation. Build projects to apply what you learn.",
+      "keywords": [
+        "learn",
+        "programming",
+        "beginners",
+        "practice",
+        "projects",
+        "online",
+        "resources"
+      ]
+    },
+    {
+      "id": 5,
+      "question": "What are the applications of Python?",
+      "answer": "Python is used in: Web development (Django, Flask), Data Science (Pandas, NumPy, Scikit-learn), Machine Learning and AI, Scientific Computing, Automation and scripting, Game Development, Desktop Applications, and more. Its versatility and rich ecosystem make it suitable for many domains.",
+      "keywords": [
+        "applications",
+        "python",
+        "web",
+        "data",
+        "science",
+        "machine",
+        "learning",
+        "automation"
+      ]
+    },
+    {
+      "id": 6,
+      "question": "What are variables in programming?",
+      "answer": "Variables are containers for storing data values. They have a name, a type (integer, string, float, etc.), and a value. In Python, you create a variable using the = operator. For example: name = 'John', age = 25, price = 19.99. Variable names should be descriptive and follow naming conventions.",
+      "keywords": [
+        "variables",
+        "programming",
+        "containers",
+        "data",
+        "values",
+        "names",
+        "types"
+      ]
+    },
+    {
+      "id": 7,
+      "question": "What are functions in programming?",
+      "answer": "Functions are reusable blocks of code that perform a specific task. They help organize code, reduce repetition, and make programs easier to maintain. A function has a name, parameters (inputs), and a return value (output). You define a function and then call it whenever needed.",
+      "keywords": [
+        "functions",
+        "programming",
+        "reusable",
+        "code",
+        "blocks",
+        "parameters",
+        "return"
+      ]
+    },
+    {
+      "id": 8,
+      "question": "What is a loop in programming?",
+      "answer": "A loop is a control structure that repeats a block of code multiple times. Two main types: 'for' loops (iterate a specific number of times) and 'while' loops (repeat while a condition is true). Loops help reduce code duplication and process collections of data efficiently.",
+      "keywords": [
+        "loop",
+        "programming",
+        "for",
+        "while",
+        "iterate",
+        "repeat",
+        "condition"
+      ]
+    },
+    {
+      "id": 9,
+      "question": "What is object-oriented programming?",
+      "answer": "Object-oriented programming (OOP) is a programming paradigm based on objects and classes. Key concepts: Classes (templates), Objects (instances), Encapsulation (bundling data and methods), Inheritance (acquiring properties from parent classes), and Polymorphism (objects responding to same message differently). OOP promotes code reusability and organization.",
+      "keywords": [
+        "oop",
+        "object-oriented",
+        "programming",
+        "classes",
+        "objects",
+        "encapsulation",
+        "inheritance",
+        "polymorphism"
+      ]
+    }
+  ],
+  "export_info": {
+    "format": "lightweight",
+    "features": [
+      "Offline capable",
+      "Keyword-based matching",
+      "Minimal file size",
+      "No external dependencies"
+    ],
+    "usage": "Suitable for mobile apps, offline use, and keyword-based question answering",
+    "accuracy_estimate": "42%",
+    "latency_estimate": "~1ms per query",
+    "memory_estimate": "5-10 MB"
+  }
+}

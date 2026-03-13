@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 ChatBot Mobile Prototype - Trainable AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #764ba2;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+
+        .model-info {
+            background: #f0f4ff;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .model-info span {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #fafafa;
+        }
+
+        .message {
+            animation: fadeIn 0.3s ease-in;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.bot .message-bubble {
+            background: #e0e0e0;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.bot .avatar {
+            font-size: 20px;
+        }
+
+        .confidence {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 5px;
+            padding: 0 16px;
+        }
+
+        .input-area {
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: blink 1.4s infinite;
+            margin: 0 3px;
+        }
+
+        .loading:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes blink {
+            0%, 60%, 100% {
+                opacity: 0.3;
+            }
+            30% {
+                opacity: 1;
+            }
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #856404;
+            margin-top: 10px;
+        }
+
+        .demo-section {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .demo-section h3 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .demo-btn {
+            background: #f0f4ff;
+            border: 1px solid #667eea;
+            color: #667eea;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            width: auto;
+            height: auto;
+        }
+
+        .demo-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .error-message {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #c62828;
+        }
+
+        .qa-list {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .qa-list h3 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .qa-item {
+            background: #f5f5f5;
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid #667eea;
+        }
+
+        .qa-item:hover {
+            background: #efefef;
+            transform: translateX(3px);
+        }
+
+        .qa-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 StudentHelper</h1>
+            <p>Trainable ChatBot Mobile Prototype v1.0.0</p>
+        </div>
+
+        <div class="model-info">
+            📊 Model: <span>Exported JSON</span> | Mode: <span>Keyword Matching</span> | Q&A Pairs: <span id="total-pairs">Loading...</span>
+        </div>
+
+        <div class="chat-area" id="chatArea">
+            <div class="welcome-message">
+                👋 Welcome to the ChatBot Mobile Prototype!<br>
+                This demonstrates how exported models work on mobile.
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input 
+                type="text" 
+                id="userInput" 
+                placeholder="Ask me something..." 
+                autocomplete="off"
+            >
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        // Embedded chatbot model (no external file needed)
+        let chatbotModel = {
+            "version": "1.0.0",
+            "chatbot_name": "StudentHelper",
+            "created_at": "2026-03-12T16:08:19.193023",
+            "exported_at": "2026-03-12T16:08:19.208370",
+            "qa_pairs": [
+                {
+                    "id": 1,
+                    "question": "What is Python?",
+                    "keywords": ["python", "programming language"],
+                    "category": "Programming",
+                    "answer": "Python is a high-level, interpreted programming language known for its simplicity and readability. It's widely used in web development, data science, AI, and automation."
+                },
+                {
+                    "id": 2,
+                    "question": "How do I learn Python?",
+                    "keywords": ["learn", "python", "tutorial", "course"],
+                    "category": "Learning",
+                    "answer": "You can learn Python through: online courses (Codecademy, Coursera), official documentation, YouTube tutorials, practice on platforms like LeetCode, and building projects."
+                },
+                {
+                    "id": 3,
+                    "question": "What is a virtual environment?",
+                    "keywords": ["virtual environment", "venv", "python"],
+                    "category": "Programming",
+                    "answer": "A virtual environment is an isolated Python workspace where you can install specific package versions without affecting your system Python. Create one with: python -m venv venv"
+                },
+                {
+                    "id": 4,
+                    "question": "How do I install packages?",
+                    "keywords": ["install", "pip", "packages"],
+                    "category": "Programming",
+                    "answer": "Use pip to install packages: pip install package_name. For multiple packages: pip install -r requirements.txt. To list installed packages: pip list"
+                },
+                {
+                    "id": 5,
+                    "question": "What is machine learning?",
+                    "keywords": ["machine learning", "AI", "ML"],
+                    "category": "AI/ML",
+                    "answer": "Machine learning is a branch of artificial intelligence where systems learn patterns from data without being explicitly programmed. It powers recommendations, image recognition, and predictions."
+                },
+                {
+                    "id": 6,
+                    "question": "What is artificial intelligence?",
+                    "keywords": ["artificial intelligence", "AI", "smart"],
+                    "category": "AI/ML",
+                    "answer": "Artificial Intelligence refers to computer systems designed to perform tasks that typically require human intelligence, including learning, reasoning, problem-solving, and language understanding."
+                },
+                {
+                    "id": 7,
+                    "question": "Tell me about data science",
+                    "keywords": ["data science", "analytics", "data"],
+                    "category": "Data Science",
+                    "answer": "Data science combines statistics, programming, and domain expertise to extract insights from data. It involves data collection, cleaning, analysis, visualization, and building predictive models."
+                },
+                {
+                    "id": 8,
+                    "question": "What is a neural network?",
+                    "keywords": ["neural network", "deep learning", "neurons"],
+                    "category": "AI/ML",
+                    "answer": "A neural network is a machine learning model inspired by biological neurons. It consists of interconnected layers of nodes that learn patterns in data through training."
+                },
+                {
+                    "id": 9,
+                    "question": "How does REST API work?",
+                    "keywords": ["REST", "API", "web service"],
+                    "category": "Web Development",
+                    "answer": "REST API uses HTTP methods (GET, POST, PUT, DELETE) to perform operations on resources. It follows principles: stateless, cacheable, uniform interface, and client-server architecture."
+                },
+                {
+                    "id": 10,
+                    "question": "What is a chatbot?",
+                    "keywords": ["chatbot", "conversation", "AI"],
+                    "category": "AI/ML",
+                    "answer": "A chatbot is an AI program designed to simulate conversation with users. It processes natural language input and generates appropriate responses, used in customer service and assistance."
+                }
+            ],
+            "metadata": {
+                "total_pairs": 10,
+                "embedding_model": "keyword-only",
+                "quantized": false,
+                "mode": "keyword"
+            }
+        };
+
+        let conversationCount = 0;
+
+        function loadModel() {
+            // Model already embedded
+            document.getElementById('total-pairs').textContent = 
+                chatbotModel.qa_pairs.length;
+            
+            addBotMessage(`✅ Model loaded! I have ${chatbotModel.qa_pairs.length} Q&A pairs ready to answer your questions.`);
+            displayQuickStart();
+        }
+
+        function displayQuickStart() {
+            const chatArea = document.getElementById('chatArea');
+            
+            // Add demo questions
+            const demoSection = document.createElement('div');
+            demoSection.className = 'demo-section';
+            demoSection.innerHTML = `
+                <h3>🧪 Try These Questions:</h3>
+                <div class="demo-buttons" id="demoButtons"></div>
+            `;
+            chatArea.appendChild(demoSection);
+
+            // Add quick questions
+            const demoButtons = document.getElementById('demoButtons');
+            const questions = [
+                "What is machine learning?",
+                "Tell me about Python",
+                "What is AI",
+                "Hello"
+            ];
+
+            questions.slice(0, 3).forEach(q => {
+                const btn = document.createElement('button');
+                btn.className = 'demo-btn';
+                btn.textContent = q;
+                btn.onclick = () => {
+                    document.getElementById('userInput').value = q;
+                    sendMessage();
+                };
+                demoButtons.appendChild(btn);
+            });
+
+            // Add Q&A reference
+            const qaSection = document.createElement('div');
+            qaSection.className = 'qa-list';
+            qaSection.innerHTML = `
+                <h3>📚 Knowledge Base (${chatbotModel.qa_pairs.length} pairs):</h3>
+                <div id="qaList"></div>
+            `;
+            chatArea.appendChild(qaSection);
+
+            const qaList = document.getElementById('qaList');
+            chatbotModel.qa_pairs.slice(0, 5).forEach((qa, idx) => {
+                const item = document.createElement('div');
+                item.className = 'qa-item';
+                item.onclick = () => {
+                    document.getElementById('userInput').value = qa.question;
+                    sendMessage();
+                };
+                item.innerHTML = `
+                    <strong>Q${idx + 1}: ${qa.question.substring(0, 40)}...</strong>
+                    <small>${qa.answer.substring(0, 60)}...</small>
+                `;
+                qaList.appendChild(item);
+            });
+        }
+
+        function findAnswer(question) {
+            if (!chatbotModel || !chatbotModel.qa_pairs) {
+                return { answer: 'Model not loaded', confidence: 0 };
+            }
+
+            const preprocessText = (text) => {
+                return text.toLowerCase()
+                    .replace(/[^\w\s]/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            };
+
+            const userWords = new Set(preprocessText(question).split(' '));
+            let bestMatch = null;
+            let bestScore = 0;
+
+            chatbotModel.qa_pairs.forEach(qa => {
+                // Question matching
+                const qWords = new Set(preprocessText(qa.question).split(' '));
+                const qScore = new Set([...userWords].filter(w => qWords.has(w))).size / 
+                              Math.max(userWords.size, 1);
+
+                // Keyword matching
+                let kScore = 0;
+                if (qa.keywords) {
+                    const kWords = new Set();
+                    qa.keywords.forEach(kw => {
+                        preprocessText(kw).split(' ').forEach(w => kWords.add(w));
+                    });
+                    kScore = new Set([...userWords].filter(w => kWords.has(w))).size / 
+                            Math.max(userWords.size, 1);
+                }
+
+                // Combined score
+                const score = (qScore * 0.75) + (kScore * 0.25);
+
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMatch = qa;
+                }
+            });
+
+            if (bestScore >= 0.3 && bestMatch) {
+                return {
+                    answer: bestMatch.answer,
+                    confidence: Math.round(bestScore * 100),
+                    category: bestMatch.category || 'general',
+                    question: bestMatch.question
+                };
+            }
+
+            return {
+                answer: "I'm not sure about that. Try asking about: " + 
+                        chatbotModel.qa_pairs.slice(0, 2)
+                            .map(q => q.question)
+                            .join(', '),
+                confidence: 0
+            };
+        }
+
+        function addBotMessage(text) {
+            const chatArea = document.getElementById('chatArea');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message bot';
+            
+            msgDiv.innerHTML = `
+                <div class="avatar">🤖</div>
+                <div>
+                    <div class="message-bubble">${escapeHtml(text)}</div>
+                </div>
+            `;
+            
+            chatArea.appendChild(msgDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function addUserMessage(text) {
+            const chatArea = document.getElementById('chatArea');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message user';
+            
+            msgDiv.innerHTML = `
+                <div class="message-bubble">${escapeHtml(text)}</div>
+            `;
+            
+            chatArea.appendChild(msgDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function addLoadingMessage() {
+            const chatArea = document.getElementById('chatArea');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message bot';
+            msgDiv.id = 'loadingMsg';
+            
+            msgDiv.innerHTML = `
+                <div class="avatar">🤖</div>
+                <div>
+                    <div class="message-bubble">
+                        <span class="loading"></span>
+                        <span class="loading"></span>
+                        <span class="loading"></span>
+                    </div>
+                </div>
+            `;
+            
+            chatArea.appendChild(msgDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            addUserMessage(message);
+            input.value = '';
+            conversationCount++;
+
+            addLoadingMessage();
+
+            // Simulate processing delay
+            setTimeout(() => {
+                const loadingMsg = document.getElementById('loadingMsg');
+                if (loadingMsg) loadingMsg.remove();
+
+                const result = findAnswer(message);
+                
+                let responseText = result.answer;
+                if (result.confidence > 0) {
+                    responseText += `\n\n✅ Confidence: ${result.confidence}% | Category: ${result.category}`;
+                }
+
+                addBotMessage(responseText);
+            }, 800);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Allow Enter key to send
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Load model on page load
+        window.addEventListener('load', loadModel);
+    </script>
+</body>
+</html>

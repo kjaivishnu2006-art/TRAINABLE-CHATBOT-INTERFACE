@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot Mobile Prototype</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 { font-size: 24px; margin-bottom: 5px; }
+        .header p { font-size: 12px; opacity: 0.9; }
+        .model-info {
+            background: #f0f4ff;
+            padding: 12px 20px;
+            border-bottom: 1px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #fafafa;
+        }
+        .message {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .message.user {
+            justify-content: flex-end;
+        }
+        .bubble {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .message.user .bubble {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .message.bot .bubble {
+            background: #e0e0e0;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+        .avatar { font-size: 20px; }
+        .input-area {
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            background: white;
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        button:hover { transform: scale(1.05); }
+        .demo-buttons {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .demo-btn {
+            background: #f0f4ff;
+            border: 1px solid #667eea;
+            color: #667eea;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+        .demo-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 StudentHelper</h1>
+            <p>ChatBot Mobile Prototype v1.0.0</p>
+        </div>
+        
+        <div class="model-info">
+            📊 Model: Keyword Matching | Q&A Pairs: <span id="total">10</span>
+        </div>
+        
+        <div class="chat-area" id="chat">
+            <div style="text-align:center; color:#999; font-size:13px;">
+                👋 Welcome! Ask me anything about Python, AI, or Data Science.
+            </div>
+        </div>
+        
+        <div class="input-area">
+            <input type="text" id="input" placeholder="Ask me something..." />
+            <button onclick="send()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        const qa = [
+            { q: "What is Python?", a: "Python is a high-level programming language known for simplicity and readability. It's used in web development, data science, AI, and automation." },
+            { q: "How do I learn Python?", a: "Learn Python through: online courses (Codecademy, Coursera), YouTube tutorials, documentation, and practice on LeetCode." },
+            { q: "What is a virtual environment?", a: "A virtual environment is an isolated Python workspace. Create one with: python -m venv venv" },
+            { q: "How do I install packages?", a: "Use pip: pip install package_name or pip install -r requirements.txt" },
+            { q: "What is machine learning?", a: "Machine learning is AI where systems learn patterns from data. It powers recommendations, image recognition, and predictions." },
+            { q: "What is artificial intelligence?", a: "AI is computer systems designed to perform tasks requiring human intelligence like learning, reasoning, and problem-solving." },
+            { q: "Tell me about data science", a: "Data science combines statistics, programming, and domain expertise to extract insights from data and build predictive models." },
+            { q: "What is a neural network?", a: "A neural network is a machine learning model inspired by biological neurons with interconnected layers that learn patterns." },
+            { q: "How does REST API work?", a: "REST API uses HTTP methods (GET, POST, PUT, DELETE) for operations. It's stateless, cacheable, and follows uniform interface principles." },
+            { q: "What is a chatbot?", a: "A chatbot is an AI program simulating conversation with users by processing natural language and generating appropriate responses." }
+        ];
+
+        function match(user) {
+            user = user.toLowerCase().split(/\W+/);
+            let best = null, score = 0;
+            
+            for (let item of qa) {
+                let q = item.q.toLowerCase().split(/\W+/);
+                let s = user.filter(w => q.includes(w)).length / Math.max(user.length, 1);
+                if (s > score) { score = s; best = item; }
+            }
+            
+            return score >= 0.3 ? { a: best.a, c: Math.round(score * 100) } : { a: "I'm not sure. Try: " + qa[0].q, c: 0 };
+        }
+
+        function addBot(text) {
+            let div = document.createElement('div');
+            div.className = 'message bot';
+            div.innerHTML = '<div class="avatar">🤖</div><div class="bubble">' + text + '</div>';
+            document.getElementById('chat').appendChild(div);
+            document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+        }
+
+        function addUser(text) {
+            let div = document.createElement('div');
+            div.className = 'message user';
+            div.innerHTML = '<div class="bubble">' + text + '</div>';
+            document.getElementById('chat').appendChild(div);
+            document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+        }
+
+        function send() {
+            let inp = document.getElementById('input');
+            let msg = inp.value.trim();
+            if (!msg) return;
+            
+            addUser(msg);
+            inp.value = '';
+            
+            setTimeout(() => {
+                let res = match(msg);
+                addBot(res.a + (res.c > 0 ? '\n\n✅ Confidence: ' + res.c + '%' : ''));
+            }, 500);
+        }
+
+        document.getElementById('input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') send();
+        });
+
+        window.onload = () => {
+            addBot('✅ ChatBot ready! I have 10 Q&A pairs loaded.');
+            let div = document.createElement('div');
+            div.className = 'demo-buttons';
+            qa.slice(0,3).forEach(item => {
+                let btn = document.createElement('button');
+                btn.className = 'demo-btn';
+                btn.textContent = item.q;
+                btn.onclick = () => { document.getElementById('input').value = item.q; send(); };
+                div.appendChild(btn);
+            });
+            document.getElementById('chat').appendChild(div);
+        };
+    </script>
+</body>
+</html>

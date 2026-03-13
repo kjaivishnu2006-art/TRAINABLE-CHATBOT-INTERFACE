@@ -1,0 +1,107 @@
+{
+  "name": "Customer Service Bot",
+  "description": "Friendly customer service chatbot for FAQs",
+  "intents": [
+    {
+      "id": "greeting",
+      "name": "greeting",
+      "utterances": [
+        "Hello",
+        "Hi",
+        "Hey",
+        "Good morning",
+        "Good afternoon",
+        "What's up",
+        "Greetings"
+      ],
+      "responses": [
+        "Hello! How can I help you today?",
+        "Hi there! What can I do for you?",
+        "Welcome! How may I assist you?"
+      ],
+      "entities": []
+    },
+    {
+      "id": "order_status",
+      "name": "order_status",
+      "utterances": [
+        "Where is my order?",
+        "Track my order",
+        "When will my package arrive?",
+        "Check order status",
+        "Is my order shipped?",
+        "What's the status of my delivery?"
+      ],
+      "responses": [
+        "I can help you track your order! Please provide your order number.",
+        "To check your order status, I'll need your order ID.",
+        "Happy to help! What's your order number?"
+      ],
+      "entities": ["order_id"]
+    },
+    {
+      "id": "return_policy",
+      "name": "return_policy",
+      "utterances": [
+        "How do I return an item?",
+        "What's your return policy?",
+        "Can I return this?",
+        "Do you accept returns?",
+        "How long do I have to return?"
+      ],
+      "responses": [
+        "We offer 30-day returns for most items. Would you like more details?",
+        "Items can be returned within 30 days of purchase in original condition.",
+        "Sure! We have a 30-day return window. Need help starting a return?"
+      ],
+      "entities": []
+    },
+    {
+      "id": "payment_issue",
+      "name": "payment_issue",
+      "utterances": [
+        "Payment failed",
+        "Why was I charged twice?",
+        "Card declined",
+        "Payment error",
+        "I wasn't charged correctly"
+      ],
+      "responses": [
+        "Sorry to hear you're having payment issues! Our team can help resolve this.",
+        "Payment problems can be frustrating. Let me connect you with our support team.",
+        "I'll help you sort out your payment issue right away!"
+      ],
+      "entities": []
+    },
+    {
+      "id": "goodbye",
+      "name": "goodbye",
+      "utterances": [
+        "Bye",
+        "Goodbye",
+        "See you later",
+        "Thanks bye",
+        "Talk later",
+        "Bye bye"
+      ],
+      "responses": [
+        "Thank you for contacting us! Have a great day!",
+        "Goodbye! Feel free to reach out anytime.",
+        "See you later! Thanks for visiting."
+      ],
+      "entities": []
+    }
+  ],
+  "entities": [
+    {
+      "name": "order_id",
+      "type": "entity.number"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "created_date": "2026-03-12",
+    "language": "en",
+    "accuracy": 0.0
+  }
+}

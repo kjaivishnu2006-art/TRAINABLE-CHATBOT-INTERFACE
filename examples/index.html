@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainable ChatBot Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🤖 Trainable ChatBot Builder</h1>
+                <p>Create and train custom chatbots without coding</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <nav class="nav-menu">
+                    <button class="nav-btn active" data-tab="builder">
+                        <span>📝</span> Builder
+                    </button>
+                    <button class="nav-btn" data-tab="test">
+                        <span>💬</span> Test Chat
+                    </button>
+                    <button class="nav-btn" data-tab="export">
+                        <span>📦</span> Export
+                    </button>
+                    <button class="nav-btn" data-tab="settings">
+                        <span>⚙️</span> Settings
+                    </button>
+                </nav>
+
+                <div class="sidebar-stats">
+                    <div class="stat">
+                        <span class="stat-label">Intents</span>
+                        <span class="stat-value" id="intent-count">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Utterances</span>
+                        <span class="stat-value" id="utterance-count">0</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-block" id="train-btn">
+                    🚀 Train Model
+                </button>
+            </aside>
+
+            <!-- Tab Content -->
+            <div class="content">
+                <!-- Builder Tab -->
+                <section class="tab-content active" id="builder-tab">
+                    <div class="builder-header">
+                        <h2>Intent Builder</h2>
+                        <button class="btn btn-success" id="add-intent-btn">
+                            + Add Intent
+                        </button>
+                    </div>
+
+                    <div class="intents-list" id="intents-list">
+                        <div class="empty-state">
+                            <p>No intents yet. Create your first one!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Test Chat Tab -->
+                <section class="tab-content" id="test-tab">
+                    <div class="test-header">
+                        <h2>Test Your ChatBot</h2>
+                        <p>Try out your trained model here</p>
+                    </div>
+
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message bot-message">
+                                <p>Train a model first to test it! 🚀</p>
+                            </div>
+                        </div>
+
+                        <div class="chat-input-group">
+                            <input 
+                                type="text" 
+                                class="chat-input" 
+                                id="user-input" 
+                                placeholder="Type your message..."
+                                disabled
+                            >
+                            <button class="btn btn-primary" id="send-btn" disabled>
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Export Tab -->
+                <section class="tab-content" id="export-tab">
+                    <div class="export-header">
+                        <h2>Export Dataset</h2>
+                        <p>Save your chatbot dataset for later use</p>
+                    </div>
+
+                    <div class="export-options">
+                        <div class="export-card">
+                            <h3>📋 Download JSON</h3>
+                            <p>Export training dataset as JSON file</p>
+                            <button class="btn btn-primary" id="export-json-btn">
+                                Export JSON
+                            </button>
+                        </div>
+
+                        <div class="export-card">
+                            <h3>📊 Export Statistics</h3>
+                            <p>Get dataset statistics and metrics</p>
+                            <button class="btn btn-primary" id="export-stats-btn">
+                                View Stats
+                            </button>
+                        </div>
+
+                        <div class="export-card">
+                            <h3>📥 Import Existing</h3>
+                            <p>Load a previously saved dataset</p>
+                            <input type="file" id="import-file" accept=".json" style="display:none">
+                            <button class="btn btn-primary" id="import-btn">
+                                Import Dataset
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="stats-container" class="stats-container" style="display:none;">
+                        <h3>Dataset Statistics</h3>
+                        <div class="stats-grid" id="stats-grid"></div>
+                    </div>
+                </section>
+
+                <!-- Settings Tab -->
+                <section class="tab-content" id="settings-tab">
+                    <div class="settings-header">
+                        <h2>Settings</h2>
+                    </div>
+
+                    <div class="settings-group">
+                        <label class="setting-item">
+                            <span class="setting-label">Chatbot Name</span>
+                            <input 
+                                type="text" 
+                                id="chatbot-name" 
+                                placeholder="My Chatbot"
+                                class="input"
+                            >
+                        </label>
+
+                        <label class="setting-item">
+                            <span class="setting-label">Chatbot Description</span>
+                            <textarea 
+                                id="chatbot-desc" 
+                                placeholder="Describe your chatbot"
+                                class="input"
+                                rows="3"
+                            ></textarea>
+                        </label>
+
+                        <label class="setting-item">
+                            <span class="setting-label">Training Epochs</span>
+                            <input 
+                                type="number" 
+                                id="epochs" 
+                                value="10"
+                                min="1"
+                                max="100"
+                                class="input"
+                            >
+                        </label>
+
+                        <label class="setting-item">
+                            <span class="setting-label">Batch Size</span>
+                            <input 
+                                type="number" 
+                                id="batch-size" 
+                                value="32"
+                                min="1"
+                                class="input"
+                            >
+                        </label>
+
+                        <label class="setting-item">
+                            <span class="setting-label">Confidence Threshold</span>
+                            <input 
+                                type="range" 
+                                id="threshold" 
+                                value="0.5"
+                                min="0"
+                                max="1"
+                                step="0.1"
+                                class="slider"
+                            >
+                            <span id="threshold-value">0.5</span>
+                        </label>
+                    </div>
+
+                    <button class="btn btn-danger" id="clear-btn">
+                        🗑️ Clear All Data
+                    </button>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Intent Modal -->
+    <div class="modal" id="intent-modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Add Intent</h2>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+
+            <form id="intent-form">
+                <div class="form-group">
+                    <label>Intent Name</label>
+                    <input 
+                        type="text" 
+                        id="intent-name" 
+                        placeholder="e.g., greeting"
+                        class="input"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Intent Description</label>
+                    <textarea 
+                        id="intent-desc" 
+                        placeholder="What does this intent do?"
+                        class="input"
+                        rows="2"
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Utterances (one per line)</label>
+                    <textarea 
+                        id="utterances" 
+                        placeholder="hello&#10;hi&#10;hey there"
+                        class="input"
+                        rows="4"
+                        required
+                    ></textarea>
+                    <small>Enter training examples of what users might say</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Responses (one per line)</label>
+                    <textarea 
+                        id="responses" 
+                        placeholder="Hello! How can I help?&#10;Hi there!"
+                        class="input"
+                        rows="4"
+                        required
+                    ></textarea>
+                    <small>Enter possible bot responses</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        Save Intent
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Training Modal -->
+    <div class="modal" id="training-modal" style="display:none;">
+        <div class="modal-content modal-center">
+            <div class="training-content">
+                <h2>Training Model...</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <p id="training-status">Initializing...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert -->
+    <div class="alert" id="alert" style="display:none;"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

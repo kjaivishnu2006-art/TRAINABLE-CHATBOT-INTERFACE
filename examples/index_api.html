@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainable ChatBot Builder - API Version</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">🤖 Trainable ChatBot Builder</h1>
+            <p class="header-subtitle">Backend Powered by Flask API</p>
+        </div>
+        <div class="header-info">
+            <span class="api-status" id="api-status">
+                <span class="status-dot"></span>
+                Connecting...
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav class="nav">
+                <button class="nav-btn active" data-tab="projects">
+                    <span class="nav-icon">📁</span>
+                    Projects
+                </button>
+                <button class="nav-btn" data-tab="builder">
+                    <span class="nav-icon">🔨</span>
+                    Intent Builder
+                </button>
+                <button class="nav-btn" data-tab="chat">
+                    <span class="nav-icon">💬</span>
+                    Test Chat
+                </button>
+                <button class="nav-btn" data-tab="export">
+                    <span class="nav-icon">📤</span>
+                    Export/Import
+                </button>
+                <button class="nav-btn" data-tab="settings">
+                    <span class="nav-icon">⚙️</span>
+                    Settings
+                </button>
+            </nav>
+
+            <div class="sidebar-stats">
+                <div class="stat">
+                    <span class="stat-label">Chatbots</span>
+                    <span class="stat-value" id="chatbot-count">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Intents</span>
+                    <span class="stat-value" id="intent-count">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Utterances</span>
+                    <span class="stat-value" id="utterance-count">0</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Alert System -->
+            <div id="alert" class="alert"></div>
+
+            <!-- Projects Tab -->
+            <div id="projects-tab" class="tab-content active">
+                <div class="tab-header">
+                    <h2>My Chatbot Projects</h2>
+                    <button class="btn btn-primary" id="new-project-btn">+ New Project</button>
+                </div>
+
+                <div id="projects-list" class="projects-grid">
+                    <div class="empty-state">
+                        <p>No projects yet. Create your first chatbot!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Builder Tab -->
+            <div id="builder-tab" class="tab-content">
+                <div class="tab-header">
+                    <h2 id="builder-title">Intent Builder</h2>
+                    <button class="btn btn-primary" id="add-intent-btn">+ Add Intent</button>
+                </div>
+
+                <div id="intents-list" class="intents-grid">
+                    <div class="empty-state"><p>No intents yet. Create your first one!</p></div>
+                </div>
+            </div>
+
+            <!-- Chat Tab -->
+            <div id="chat-tab" class="tab-content">
+                <div class="tab-header">
+                    <h2>Test Chat</h2>
+                    <button class="btn btn-secondary" id="clear-chat-btn">Clear Chat</button>
+                </div>
+
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages"></div>
+                    <div class="chat-input-area">
+                        <input
+                            type="text"
+                            id="user-input"
+                            class="chat-input"
+                            placeholder="Type your message..."
+                            disabled
+                        />
+                        <button id="send-btn" class="btn btn-primary chat-send-btn" disabled>
+                            Send
+                        </button>
+                    </div>
+                </div>
+
+                <div style="padding: 1.5rem; background: #f3f4f6; border-radius: 8px; margin-top: 2rem;">
+                    <button class="btn btn-success" id="train-btn" style="width: 100%;">
+                        🚀 Train Model
+                    </button>
+                    <p style="color: #6b7280; font-size: 0.9rem; margin-top: 1rem; text-align: center;">
+                        Train the model with your intents before testing chat
+                    </p>
+                </div>
+            </div>
+
+            <!-- Export Tab -->
+            <div id="export-tab" class="tab-content">
+                <div class="tab-header">
+                    <h2>Export & Import</h2>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <!-- Export Section -->
+                    <div class="card">
+                        <h3>Export Chatbot</h3>
+                        <p style="color: #6b7280; margin-bottom: 1.5rem;">
+                            Download your chatbot configuration as JSON
+                        </p>
+                        <button class="btn btn-primary" id="export-json-btn" style="width: 100%;">
+                            📥 Export as JSON
+                        </button>
+                    </div>
+
+                    <!-- Import Section -->
+                    <div class="card">
+                        <h3>Import Chatbot</h3>
+                        <p style="color: #6b7280; margin-bottom: 1.5rem;">
+                            Upload a previously exported JSON file
+                        </p>
+                        <button class="btn btn-primary" id="import-btn" style="width: 100%;">
+                            📤 Import from JSON
+                        </button>
+                        <input type="file" id="import-file" accept=".json" style="display: none;" />
+                    </div>
+                </div>
+
+                <!-- Statistics Section -->
+                <div style="margin-top: 2rem;">
+                    <h3>Statistics</h3>
+                    <button class="btn btn-secondary" id="export-stats-btn" style="margin-bottom: 1.5rem;">
+                        📊 Load Statistics
+                    </button>
+                    <div id="stats-grid" class="stats-grid" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="tab-content">
+                <div class="tab-header">
+                    <h2>Settings</h2>
+                </div>
+
+                <div class="card" style="max-width: 500px;">
+                    <h3>Model Configuration</h3>
+
+                    <div class="form-group">
+                        <label>Confidence Threshold</label>
+                        <input
+                            type="range"
+                            id="threshold"
+                            min="0"
+                            max="1"
+                            step="0.1"
+                            value="0.5"
+                            class="slider"
+                        />
+                        <div style="display: flex; justify-content: space-between; color: #6b7280; font-size: 0.9rem;">
+                            <span>Low</span>
+                            <span>Threshold: <strong id="threshold-value">0.5</strong></span>
+                            <span>High</span>
+                        </div>
+                        <p style="color: #6b7280; font-size: 0.85rem; margin-top: 0.5rem;">
+                            Lower threshold = more lenient matching (0.3-0.5)
+                            <br />
+                            Higher threshold = stricter matching (0.7-0.9)
+                        </p>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+                        <h4>Danger Zone</h4>
+                        <button class="btn btn-danger" id="clear-btn" style="width: 100%; margin-top: 1rem;">
+                            🗑️ Clear All Data
+                        </button>
+                        <p style="color: #dc2626; font-size: 0.85rem; margin-top: 0.5rem;">
+                            This will delete all intents in the current project. This cannot be undone.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Intent Modal -->
+    <div id="intent-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Add Intent</h3>
+                <button class="modal-close" id="close-modal">✕</button>
+            </div>
+
+            <form id="intent-form">
+                <div class="form-group">
+                    <label>Intent Name *</label>
+                    <input
+                        type="text"
+                        id="intent-name"
+                        placeholder="e.g., greeting, help_request"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <input
+                        type="text"
+                        id="intent-desc"
+                        placeholder="Brief description of this intent"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label>Utterances (one per line) *</label>
+                    <textarea
+                        id="utterances"
+                        placeholder="hello&#10;hi&#10;hey there"
+                        rows="4"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Responses (one per line) *</label>
+                    <textarea
+                        id="responses"
+                        placeholder="Hello! How can I help?&#10;Hi there!"
+                        rows="4"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Save Intent</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- New Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Project</h3>
+                <button class="modal-close" id="close-project-modal">✕</button>
+            </div>
+
+            <form id="project-form">
+                <div class="form-group">
+                    <label>Project Name *</label>
+                    <input
+                        type="text"
+                        id="project-name"
+                        placeholder="e.g., Customer Service Bot"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea
+                        id="project-desc"
+                        placeholder="What will this chatbot do?"
+                        rows="3"
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Language</label>
+                    <select id="project-language">
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Create Project</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-project-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Training Modal -->
+    <div id="training-modal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Training Model</h3>
+            </div>
+
+            <div style="padding: 2rem; text-align: center;">
+                <div style="margin-bottom: 2rem;">
+                    <p id="training-status">Initializing...</p>
+                </div>
+
+                <div style="background: #e5e7eb; border-radius: 8px; height: 8px; overflow: hidden;">
+                    <div
+                        id="progress-fill"
+                        style="
+                            background: linear-gradient(90deg, #3b82f6, #10b981);
+                            height: 100%;
+                            width: 0%;
+                            transition: width 0.3s ease;
+                        "
+                    ></div>
+                </div>
+
+                <p style="color: #6b7280; font-size: 0.9rem; margin-top: 1rem;">
+                    Please wait while the model is being trained...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script_api.js"></script>
+</body>
+</html>

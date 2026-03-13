@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "type": "lightweight",
+    "chatbot_name": "Simple FAQ Chatbot",
+    "export_date": "2026-03-12T15:28:38.263155",
+    "total_qa_pairs": 10
+  },
+  "qa_pairs": [
+    {
+      "id": 0,
+      "question": "What is Python?",
+      "answer": "Python is a high-level, interpreted programming language known for its simplicity and readability. It's widely used in web development, data science, AI, and automation.",
+      "keywords": [
+        "python",
+        "programming language"
+      ]
+    },
+    {
+      "id": 1,
+      "question": "How do I learn Python?",
+      "answer": "You can learn Python through: online courses (Codecademy, Coursera), official documentation, YouTube tutorials, practice on platforms like LeetCode, and building projects.",
+      "keywords": [
+        "learn",
+        "python",
+        "tutorial",
+        "course"
+      ]
+    },
+    {
+      "id": 2,
+      "question": "What is a virtual environment?",
+      "answer": "A virtual environment is an isolated Python workspace where you can install specific package versions without affecting your system Python. Create one with: python -m venv venv",
+      "keywords": [
+        "virtual environment",
+        "venv",
+        "python"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "How do I install packages?",
+      "answer": "Use pip to install packages: pip install package_name. For multiple packages: pip install -r requirements.txt. To list installed packages: pip list",
+      "keywords": [
+        "install",
+        "pip",
+        "packages",
+        "dependencies"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "What is a JSON file?",
+      "answer": "JSON (JavaScript Object Notation) is a lightweight data format using key-value pairs. It's human-readable and widely used for data exchange in APIs and configuration files.",
+      "keywords": [
+        "json",
+        "data format",
+        "structure"
+      ]
+    },
+    {
+      "id": 5,
+      "question": "How do I read a JSON file in Python?",
+      "answer": "Use the json module: import json; with open('file.json') as f: data = json.load(f). For JSON strings: data = json.loads(json_string)",
+      "keywords": [
+        "json",
+        "read",
+        "file",
+        "python"
+      ]
+    },
+    {
+      "id": 6,
+      "question": "What is machine learning?",
+      "answer": "Machine learning is a branch of AI where systems learn patterns from data without explicit programming. Types include supervised, unsupervised, and reinforcement learning.",
+      "keywords": [
+        "machine learning",
+        "ai",
+        "neural networks"
+      ]
+    },
+    {
+      "id": 7,
+      "question": "What is TensorFlow?",
+      "answer": "TensorFlow is an open-source machine learning framework by Google. It's used for building and training neural networks, with support for both CPUs and GPUs.",
+      "keywords": [
+        "tensorflow",
+        "machine learning",
+        "neural networks"
+      ]
+    },
+    {
+      "id": 8,
+      "question": "How do I handle errors in Python?",
+      "answer": "Use try-except blocks: try: code; except ErrorType: handle_error. You can catch specific exceptions or use 'except Exception' for all. Use 'finally' for cleanup.",
+      "keywords": [
+        "error",
+        "exception",
+        "try catch"
+      ]
+    },
+    {
+      "id": 9,
+      "question": "What is a chatbot?",
+      "answer": "A chatbot is a software program that simulates conversation. It can use pattern matching, rule-based logic, or machine learning to understand and respond to user queries.",
+      "keywords": [
+        "chatbot",
+        "conversation",
+        "ai"
+      ]
+    }
+  ]
+}

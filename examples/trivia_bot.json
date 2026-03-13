@@ -1,0 +1,81 @@
+{
+  "name": "Trivia Bot",
+  "description": "Fun trivia question chatbot",
+  "intents": [
+    {
+      "id": "greeting",
+      "name": "greeting",
+      "utterances": [
+        "Hi",
+        "Hello",
+        "Start trivia",
+        "Let's play",
+        "I want to play trivia"
+      ],
+      "responses": [
+        "Welcome to Trivia Bot! Ready for some fun questions? Say 'give me a question'",
+        "Hey there! Let's test your knowledge. Ask for a question!",
+        "Great! I've got some awesome trivia questions for you."
+      ],
+      "entities": []
+    },
+    {
+      "id": "request_question",
+      "name": "request_question",
+      "utterances": [
+        "Give me a question",
+        "Ask me something",
+        "Next question",
+        "I'm ready",
+        "Let's go"
+      ],
+      "responses": [
+        "Which planet is known as the Red Planet? (Hint: Mars, Venus, or Jupiter)",
+        "What's the capital of France? (Paris, London, or Berlin)",
+        "In what year did the Titanic sink? (1912, 1915, or 1918)"
+      ],
+      "entities": []
+    },
+    {
+      "id": "answer_correct",
+      "name": "answer_correct",
+      "utterances": [
+        "Mars",
+        "Paris",
+        "1912",
+        "Yes that's right",
+        "Correct"
+      ],
+      "responses": [
+        "🎉 Correct! Great job! Ready for another?",
+        "You got it! Well done! Want another question?",
+        "Excellent! You're on fire! Next one?"
+      ],
+      "entities": []
+    },
+    {
+      "id": "answer_incorrect",
+      "name": "answer_incorrect",
+      "utterances": [
+        "Venus",
+        "London",
+        "1915",
+        "That's wrong",
+        "I give up"
+      ],
+      "responses": [
+        "Not quite! The correct answer was Mars. Try the next one?",
+        "Not this time! It was Paris. Want to try again?",
+        "That's not right, but good try! The answer was 1912. Ready for another?"
+      ],
+      "entities": []
+    }
+  ],
+  "entities": [],
+  "metadata": {
+    "version": "1.0.0",
+    "created_date": "2026-03-12",
+    "language": "en",
+    "accuracy": 0.0
+  }
+}

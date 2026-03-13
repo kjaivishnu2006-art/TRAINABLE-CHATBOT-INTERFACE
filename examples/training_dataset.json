@@ -1,0 +1,335 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "name": "General Assistant Chatbot",
+    "description": "A multi-intent chatbot dataset for training intent classification models",
+    "language": "en",
+    "created_date": "2026-03-12",
+    "author": "Chatbot Builder",
+    "license": "MIT"
+  },
+  "entities": [
+    {
+      "entity_id": "entity.name",
+      "entity_type": "NAME",
+      "description": "Person's name or entity name",
+      "examples": ["John", "Alice", "Company X"]
+    },
+    {
+      "entity_id": "entity.date",
+      "entity_type": "DATE",
+      "description": "Specific date or time reference",
+      "examples": ["tomorrow", "March 15", "next week"]
+    },
+    {
+      "entity_id": "entity.location",
+      "entity_type": "LOCATION",
+      "description": "Geographic location",
+      "examples": ["New York", "Downtown", "Conference Room A"]
+    },
+    {
+      "entity_id": "entity.product",
+      "entity_type": "PRODUCT",
+      "description": "Product or service name",
+      "examples": ["Python course", "laptop", "coffee"]
+    }
+  ],
+  "intents": [
+    {
+      "intent_id": "greeting",
+      "intent_name": "greeting",
+      "description": "User greets the chatbot",
+      "priority": "high",
+      "utterances": [
+        "hello",
+        "hi there",
+        "hey",
+        "good morning",
+        "greetings",
+        "what's up",
+        "hey there",
+        "hello bot"
+      ],
+      "responses": [
+        "Hello! How can I help you today?",
+        "Hi there! What can I do for you?",
+        "Greetings! How may I assist you?",
+        "Hey! What brings you here?",
+        "Welcome! How can I help?"
+      ],
+      "entities": [],
+      "context": {
+        "requires_context": false,
+        "sets_context": "greeting_acknowledged"
+      }
+    },
+    {
+      "intent_id": "farewell",
+      "intent_name": "farewell",
+      "description": "User says goodbye",
+      "priority": "high",
+      "utterances": [
+        "goodbye",
+        "bye",
+        "see you later",
+        "talk later",
+        "bye bye",
+        "farewell",
+        "catch you later",
+        "take care"
+      ],
+      "responses": [
+        "Goodbye! Have a great day!",
+        "See you later! Thanks for chatting.",
+        "Bye! Feel free to come back anytime.",
+        "Take care! Goodbye!",
+        "See you next time!"
+      ],
+      "entities": [],
+      "context": {
+        "requires_context": false,
+        "sets_context": "conversation_ended"
+      }
+    },
+    {
+      "intent_id": "help_request",
+      "intent_name": "help_request",
+      "description": "User asks for help or support",
+      "priority": "high",
+      "utterances": [
+        "help",
+        "I need help",
+        "can you help me",
+        "help me please",
+        "I'm stuck",
+        "what can you do",
+        "how do I get help",
+        "support"
+      ],
+      "responses": [
+        "I'm here to help! What do you need assistance with?",
+        "Sure! I can help you with many things. What's the issue?",
+        "Of course! Tell me what you need help with.",
+        "I'm happy to help. What's troubling you?",
+        "Let me help you. What can I do?"
+      ],
+      "entities": [],
+      "context": {
+        "requires_context": false,
+        "sets_context": "help_offered"
+      }
+    },
+    {
+      "intent_id": "schedule_meeting",
+      "intent_name": "schedule_meeting",
+      "description": "User wants to schedule or book a meeting",
+      "priority": "medium",
+      "utterances": [
+        "schedule a meeting",
+        "book a meeting",
+        "I need to schedule something",
+        "can we have a meeting",
+        "set up a meeting",
+        "arrange a call",
+        "book a call with {name}",
+        "I'd like to meet {date}"
+      ],
+      "responses": [
+        "I'd be happy to help schedule a meeting. Who should attend and when would you prefer?",
+        "Sure! I can help you book a meeting. What date and time work for you?",
+        "Let's schedule that. Can you tell me who needs to be there and your preferred time?",
+        "I'll help arrange that. When are you available and who else should join?",
+        "Perfect! Let me set that up. What date works best for you?"
+      ],
+      "entities": ["entity.name", "entity.date"],
+      "context": {
+        "requires_context": false,
+        "sets_context": "meeting_scheduled"
+      }
+    },
+    {
+      "intent_id": "ask_weather",
+      "intent_name": "ask_weather",
+      "description": "User asks about weather",
+      "priority": "medium",
+      "utterances": [
+        "what's the weather",
+        "how's the weather today",
+        "weather forecast",
+        "is it raining",
+        "weather in {location}",
+        "will it rain tomorrow",
+        "what will the weather be like",
+        "temperature today"
+      ],
+      "responses": [
+        "I don't have real-time weather data, but you can check a weather service for the latest forecast.",
+        "For weather information, I recommend checking a weather app or website for the most current data.",
+        "I can't access live weather data right now. Try checking your local weather service!",
+        "Weather details change frequently. Please check a weather website for accurate information.",
+        "I don't have weather capabilities, but meteorological sites have detailed forecasts."
+      ],
+      "entities": ["entity.location"],
+      "context": {
+        "requires_context": false,
+        "sets_context": null
+      }
+    },
+    {
+      "intent_id": "product_inquiry",
+      "intent_name": "product_inquiry",
+      "description": "User inquires about a product or service",
+      "priority": "high",
+      "utterances": [
+        "tell me about {product}",
+        "what is {product}",
+        "do you have {product}",
+        "how much is {product}",
+        "information about {product}",
+        "can I get {product}",
+        "where can I find {product}",
+        "product details"
+      ],
+      "responses": [
+        "I'd be happy to tell you about that. What specific product are you interested in?",
+        "Let me provide you with information about {product}. What would you like to know?",
+        "Sure! I can help with product information. Which product interests you?",
+        "I can assist with product inquiries. What are you looking for?",
+        "Tell me more! What would you like to know about our products?"
+      ],
+      "entities": ["entity.product"],
+      "context": {
+        "requires_context": false,
+        "sets_context": "product_inquiry_active"
+      }
+    },
+    {
+      "intent_id": "feedback",
+      "intent_name": "feedback",
+      "description": "User provides positive or negative feedback",
+      "priority": "medium",
+      "utterances": [
+        "great job",
+        "thanks for the help",
+        "this is amazing",
+        "you're very helpful",
+        "not satisfied",
+        "I'm disappointed",
+        "this didn't work",
+        "excellent service"
+      ],
+      "responses": [
+        "Thank you for the feedback! We appreciate your input.",
+        "I'm glad I could help! Your feedback matters to us.",
+        "Thanks for sharing! We'll work on improvements.",
+        "Your feedback is valuable. Thank you for taking the time!",
+        "We appreciate hearing from you. How can we do better?"
+      ],
+      "entities": [],
+      "context": {
+        "requires_context": false,
+        "sets_context": "feedback_received"
+      }
+    },
+    {
+      "intent_id": "account_access",
+      "intent_name": "account_access",
+      "description": "User wants to access their account",
+      "priority": "high",
+      "utterances": [
+        "login",
+        "sign in",
+        "access my account",
+        "create an account",
+        "I forgot my password",
+        "account settings",
+        "how do I log in",
+        "sign up"
+      ],
+      "responses": [
+        "I can help with account access. Would you like to log in or create a new account?",
+        "Sure! To access your account, please provide your credentials.",
+        "I'll help you with account access. What do you need?",
+        "Let me assist you. Are you trying to log in or sign up?",
+        "For account access, I may need to verify your identity first."
+      ],
+      "entities": [],
+      "context": {
+        "requires_context": false,
+        "sets_context": "account_access_initiated"
+      }
+    },
+    {
+      "intent_id": "payment_inquiry",
+      "intent_name": "payment_inquiry",
+      "description": "User asks about payment or pricing",
+      "priority": "high",
+      "utterances": [
+        "how much does it cost",
+        "what's the price",
+        "pricing information",
+        "payment methods",
+        "do you accept credit cards",
+        "can I get an invoice",
+        "how do I pay",
+        "what are your rates"
+      ],
+      "responses": [
+        "I'd be happy to discuss pricing with you. What would you like to know?",
+        "For specific pricing information, please let me know what service or product you're interested in.",
+        "We offer various payment options. Can you tell me more about your needs?",
+        "Pricing varies depending on the service. What are you looking to purchase?",
+        "I can help with payment information. What would you like to know?"
+      ],
+      "entities": ["entity.product"],
+      "context": {
+        "requires_context": false,
+        "sets_context": "pricing_requested"
+      }
+    },
+    {
+      "intent_id": "technical_support",
+      "intent_name": "technical_support",
+      "description": "User has a technical issue or problem",
+      "priority": "high",
+      "utterances": [
+        "I have a problem",
+        "something's not working",
+        "error message",
+        "the app crashed",
+        "it's broken",
+        "technical issue",
+        "bug report",
+        "how do I fix this"
+      ],
+      "responses": [
+        "Sorry to hear you're having trouble! Can you describe the issue you're experiencing?",
+        "I'm sorry there's a technical problem. Let me try to help troubleshoot.",
+        "I understand you're facing an issue. Can you provide more details?",
+        "Let's get this sorted out. What exactly is happening?",
+        "Technical issues can be frustrating. Please tell me what's going wrong."
+      ],
+      "entities": [],
+      "context": {
+        "requires_context": false,
+        "sets_context": "troubleshooting_started"
+      }
+    }
+  ],
+  "training_config": {
+    "epochs": 10,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "validation_split": 0.2,
+    "random_seed": 42
+  },
+  "statistics": {
+    "total_intents": 10,
+    "total_entities": 4,
+    "total_utterances": 80,
+    "average_utterances_per_intent": 8,
+    "total_responses": 50,
+    "min_utterances_per_intent": 8,
+    "max_utterances_per_intent": 8
+  }
+}
