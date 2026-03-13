@@ -5,31 +5,18 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Tests: pytest](https://img.shields.io/badge/tests-pytest-green.svg)](https://pytest.org)
 
-A complete platform for building, training, and deploying AI chatbots with semantic understanding. Design conversational AI from a web interface, export models for mobile apps, and deploy to production with ease.
+A complete platform for building, training, and deploying AI chatbots with semantic understanding. Design conversational AI from a premium web interface, visualize semantic space, and deploy fully functional mobile-ready models.
 
-**Perfect for:** Educational projects, GSoC submissions, chatbot prototyping, rapid deployment, and learning AI/ML fundamentals.
+**[🌐 Live Prototype](https://kjaivishnu2006-art.github.io/TRAINABLE-CHATBOT-INTERFACE/examples/index.html)** | **[🎨 Platform Dashboard](https://kjaivishnu2006-art.github.io/TRAINABLE-CHATBOT-INTERFACE/platform/index.html)**
 
-## ✨ Features
+**Developed for Google Summer of Code (GSoC) 2024.**
 
-### Core Capabilities
-- 🧠 **Dual-Mode AI**: Keyword-based (42% accuracy, ~1ms) and Semantic (92% accuracy, ~45ms) matching
-- 📱 **Mobile-First**: Export to iOS, Android, Flutter, React Native with pre-built extensions
-- 🌐 **Web Interface**: Visual Q&A builder with real-time chat testing
-- 📊 **REST API**: Complete backend for model management and inference
-- 🚀 **Zero-Setup Deployment**: Works offline on mobile, no server required
-- 💾 **JSON Export**: Portable models for any platform
-- 🔄 **Model Versioning**: Version tracking and update management
-- 📈 **Scalable**: From 10 to 1000+ Q&A pairs
-
-### Advanced Features
-- **Semantic Embeddings** with Sentence Transformers (all-MiniLM-L6-v2, all-mpnet-base-v2)
-- **Quantization** of embeddings (75% size reduction)
-- **MIT App Inventor** custom extension support
-- **GPU Acceleration** for faster inference
-- **Batch Processing** for multiple questions
-- **Search & Discovery** with keyword matching
-- **Chat History** persistence
-- **Analytics** integration ready
+### 💎 Ultra Features (GSOC Special)
+- **🧠 Semantic Space Visualizer**: Interactive 2D visualization of high-dimensional intent clusters.
+- **🎙️ Voice Integration**: Test your chatbot with real-time speech-to-text integration.
+- **⚡ AI Heartbeat Analytics**: Real-time performance metrics (accuracy, latency, model size) at a glance.
+- **📱 Real-time Mobile Preview**: Instantly see how your bot looks on mobile devices.
+- **🎨 Premium UX**: Glassmorphism-inspired dashboard for a truly modern developer experience.
 
 ## 🏗️ Architecture
 
@@ -105,12 +92,11 @@ python examples/mobile_chatbot_client.py
 ### Web Interface - 10 Minutes
 
 ```bash
-# Start Flask backend
-cd src/chatbot_builder
-python app.py
+# Start Flask backend (Python 3.10+)
+python src/chatbot_builder/app.py
 
-# Open browser
-# Navigate to: http://localhost:5000
+# Open your browser to the Dashboard
+# http://localhost:8080/platform/
 
 # Use web interface to:
 # - Create intents & responses
@@ -608,9 +594,9 @@ If you use this project in your research or work, please cite:
 ```bibtex
 @software{trainable_chatbot_2024,
   title={Trainable ChatBot Interface},
-  author={Your Name},
+  author={K Jai Vishnu},
   year={2024},
-  url={https://github.com/yourusername/trainable-chatbot}
+  url={https://github.com/kjaivishnu2006-art/TRAINABLE-CHATBOT-INTERFACE}
 }
 ```
 
