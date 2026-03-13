@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSOC ChatBot Platform | Professional Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass">
+            <div class="logo">
+                <span>🤖</span> GSOC Bot
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item active" data-view="dashboard">🏠 Dashboard</li>
+                <li class="nav-item" data-view="projects">📁 My Projects</li>
+                <li class="nav-item" data-view="builder">🛠️ Intent Builder</li>
+                <li class="nav-item" data-view="visualizer">🧠 AI Visualizer</li>
+                <li class="nav-item" data-view="test">💬 Test Arena</li>
+                <li class="nav-item" data-view="export">📦 Export Center</li>
+            </ul>
+            <div style="margin-top: auto;">
+                <li class="nav-item" data-view="settings">⚙️ Settings</li>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <header class="header fade-in">
+                <div>
+                    <h1 id="view-title">Dashboard Overview</h1>
+                    <p class="stat-label">Welcome back, GSoC Contributor!</p>
+                </div>
+                <button class="btn btn-primary" id="new-project-btn">+ New Project</button>
+            </header>
+
+            <!-- Dynamic Views Here -->
+            <div id="view-container" class="fade-in">
+                <!-- Default Dashboard Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card glass">
+                        <div class="stat-label">Total Intents</div>
+                        <div class="stat-value" id="stat-intents">0</div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-label">Semantic Accuracy</div>
+                        <div class="stat-value" id="stat-accuracy">--</div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-label">Model Size</div>
+                        <div class="stat-value" id="stat-size">0 KB</div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-label">API Health</div>
+                        <div class="stat-value" style="color: var(--success);">Online</div>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="card glass">
+                        <h2>🧠 Semantic Visualizer (Ultra)</h2>
+                        <div class="visualizer-container" id="visualizer-canvas">
+                            <p style="text-align: center; padding-top: 140px; color: var(--text-muted);">
+                                Add more intents to visualize the semantic clusters.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card glass">
+                        <h2>📱 Mobile Preview</h2>
+                        <div class="phone-mockup">
+                            <div style="background: var(--primary); height: 60px; padding: 10px; text-align: center;">
+                                Bot UI
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals and Alerts -->
+    <div id="toast" class="glass" style="position: fixed; bottom: 20px; right: 20px; padding: 1rem 2rem; border-radius: var(--radius-md); display: none; z-index: 1000;"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

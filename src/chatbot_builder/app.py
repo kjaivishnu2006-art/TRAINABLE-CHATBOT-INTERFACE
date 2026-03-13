@@ -6,7 +6,7 @@ Provides REST endpoints for managing chatbot training data
 import os
 import json
 from datetime import datetime
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
@@ -150,6 +150,20 @@ class Entity(db.Model):
             'description': self.description,
             'examples': self.examples
         }
+
+
+# ===============================================
+# Static File Serving for Platform
+# ===============================================
+
+@app.route('/platform')
+@app.route('/platform/')
+def serve_platform_index():
+    return send_from_directory('C:/Users/Admin/OneDrive/Desktop/Trainable ChatBot interface/platform', 'index.html')
+
+@app.route('/platform/<path:path>')
+def serve_platform_files(path):
+    return send_from_directory('C:/Users/Admin/OneDrive/Desktop/Trainable ChatBot interface/platform', path)
 
 
 # ===============================================
@@ -585,6 +599,47 @@ def get_stats():
 
 
 # ===============================================
+# Inference API
+# ===============================================
+
+@app.route('/api/ask/<int:chatbot_id>', methods=['POST'])
+def ask_chatbot(chatbot_id):
+    """Simulated inference for the chatbot"""
+    try:
+        data = request.get_json()
+        question = data.get('question', '').lower()
+        
+        chatbot = ChatBot.query.get(chatbot_id)
+        if not chatbot:
+            return jsonify({'error': 'Chatbot not found'}), 404
+            
+        # Basic matching logic (could be swapped with ML engine)
+        best_match = None
+        for intent in chatbot.intents:
+            for utterance in intent.utterances:
+                if question in utterance.text.lower() or utterance.text.lower() in question:
+                    best_match = intent
+                    break
+            if best_match: break
+            
+        if best_match and best_match.responses:
+            import random
+            return jsonify({
+                'answer': random.choice(best_match.responses).text,
+                'intent': best_match.name,
+                'confidence': 0.85
+            }), 200
+        else:
+            return jsonify({
+                'answer': "I'm sorry, I don't recognize that intent yet. Try adding more utterances!",
+                'confidence': 0.1
+            }), 200
+            
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# ===============================================
 # Error Handlers
 # ===============================================
 
@@ -625,4 +680,5 @@ def drop_db():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 8080))
+    app.run(debug=False, host='0.0.0.0', port=port)
