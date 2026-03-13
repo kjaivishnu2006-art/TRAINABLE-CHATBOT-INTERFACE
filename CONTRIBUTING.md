@@ -11,7 +11,7 @@ By participating in this project, you agree to abide by our [Code of Conduct](CO
 ### Reporting Bugs
 
 1. **Check existing issues** to avoid duplicates
-2. Use the [Bug Report template](https://github.com/your-org/trainable-chatbot/issues/new?template=bug_report.md)
+2. Use the [Bug Report template](https://github.com/kjaivishnu2006-art/TRAINABLE-CHATBOT-INTERFACE/issues/new)
 3. Include:
    - Python version and OS
    - Steps to reproduce
@@ -20,7 +20,7 @@ By participating in this project, you agree to abide by our [Code of Conduct](CO
 
 ### Requesting Features
 
-1. Use the [Feature Request template](https://github.com/your-org/trainable-chatbot/issues/new?template=feature_request.md)
+1. Use the [Feature Request template](https://github.com/kjaivishnu2006-art/TRAINABLE-CHATBOT-INTERFACE/issues/new)
 2. Clearly describe the feature and why it's needed
 3. Provide usage examples if applicable
 
@@ -41,7 +41,7 @@ git clone https://github.com/your-username/trainable-chatbot.git
 cd trainable-chatbot
 
 # Add upstream remote
-git remote add upstream https://github.com/original-org/trainable-chatbot.git
+git remote add upstream https://github.com/kjaivishnu2006-art/TRAINABLE-CHATBOT-INTERFACE.git
 
 # Create virtual environment
 python -m venv venv

@@ -38,7 +38,7 @@ Representation of a project includes using an official project email address, po
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [conduct@example.com](mailto:conduct@example.com). All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [kjaivishnu2006@gmail.com](mailto:kjaivishnu2006@gmail.com). All complaints will be reviewed and investigated promptly and fairly.
 
 All project leaders are obligated to respect the privacy and security of the reporter of any incident.
 
